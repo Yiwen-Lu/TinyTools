@@ -51,20 +51,7 @@ def gen_rdarr(x):
 def gen_idx_arr(x):
     count = len(x)
     idx_arr = gen_rdarr(count)
-    # print(idx_arr)
     return count, idx_arr
-
-# def update_count(count):
-#     # global count
-#     global idx_arr
-#     print("update count:", count, "->", count-1)
-#     if count <= 1:
-#         # re-generate new indices
-#         # count = len(dict_q)
-#         # idx_arr = gen_rdarr(count)
-#         count, idx_arr = gen_idx_arr(dict_hepburn)
-#     else:
-#         count -= 1
 
 def play(qn, ans):
     print("Q:", qn)
@@ -79,20 +66,14 @@ def main(mode1, mode2):
         dict_q = dict_katakana
         print("Start Practising Katakana...\nPress 'Enter' to continue, Type 'exit' to quit.")
 
-    # count = len(dict_hepburn)
-    # idx_arr = gen_rdarr(count)
-    # # print(idx_arr)
-
     count, idx_arr = gen_idx_arr(dict_hepburn)
 
     def update_count():
         nonlocal count
         nonlocal idx_arr
-        # print("update count:", count, "->", count-1)
+        print("update count:", count, "->", count-1)
         if count <= 1:
-            # re-generate new indices
-            # count = len(dict_q)
-            # idx_arr = gen_rdarr(count)
+            # re-generate indices
             count, idx_arr = gen_idx_arr(dict_hepburn)
         else:
             count -= 1
@@ -102,26 +83,19 @@ def main(mode1, mode2):
 
         if choice != 'exit':
             idx = idx_arr[count - 1] + 1
-            print("count:", count)
             if idx in [37, 39, 47, 48, 49]:
                 print("idx:", idx, "---> pass")
                 update_count()
-                continue
+                idx = idx_arr[count - 1] + 1
+                print("updated idx to", idx)
+            update_count()
+            qn = dict_hepburn[idx]
+            ans = dict_q[qn]
+            print("count:", count)
+            if mode1 == True:
+                play(qn, ans)
             else:
-                # if count <= 1:
-                #     # re-generate new indices
-                #     # count = len(dict_q)
-                #     # idx_arr = gen_rdarr(count)
-                #     count, idx_arr = gen_idx_arr(dict_hepburn)
-                # else:
-                #     count -= 1
-                update_count()
-                qn = dict_hepburn[idx]
-                ans = dict_q[qn]
-                if mode1 == True:
-                    play(qn, ans)
-                else:
-                    play(ans, qn)
+                play(ans, qn)
 
         else:
             break

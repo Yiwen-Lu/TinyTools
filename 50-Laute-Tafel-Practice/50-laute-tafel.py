@@ -58,8 +58,8 @@ def play(qn, ans):
     input()
     print("A:", ans)
 
-def main(mode1, mode2):
-    if mode2 == True:
+def main(args):
+    if args.mode2 == "hiragana":
         dict_q = dict_hiragana
         print("Start Practising Hiragana...\nPress 'Enter' to continue, Type 'exit' to quit.")
     else:
@@ -92,7 +92,7 @@ def main(mode1, mode2):
             qn = dict_hepburn[idx]
             ans = dict_q[qn]
             print("count:", count)
-            if mode1 == True:
+            if args.mode1 == "kana":
                 play(qn, ans)
             else:
                 play(ans, qn)
@@ -103,11 +103,9 @@ def main(mode1, mode2):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='50-Laute-Tafel Übung')
-    parser.add_argument('--mode1', default='True',
-        help='given kana to practise hepburn, vice versa')
-    parser.add_argument('--mode2', default='True',
-        help='True: practise hiragana; False: practise katakana')
+    parser.add_argument('--mode1', default='kana',
+        help='given kana to practise hepburn')
+    parser.add_argument('--mode2', default='hiragana',
+        help='practise hiragana or katakana')
     args = parser.parse_args()
-    args.mode1 = False
-    args.mode2 = True
-    main(args.mode1, args.mode2)
+    main(args)
